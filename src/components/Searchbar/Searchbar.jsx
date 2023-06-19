@@ -1,30 +1,28 @@
-import { Component } from "react";
+import { useState } from "react";
 import css from './Serchbar.module.css';
 import PropTypes from 'prop-types';
 import { CiSearch } from "react-icons/ci";
-export class Searchbar extends Component {
-    state = {
-      photoText: '',
+
+export const Searchbar = ({onSubmit}) => {
+  const [photoText, setPhotoText] = useState('')
+   
+  const handlePhotoTextChange = e => {
+    const { value } = e.currentTarget;
+     setPhotoText(value.toLowerCase())
     };
 
-  handlePhotoTextChange = e => {
-    this.setState({ photoText: e.currentTarget.value.toLowerCase() })
-    };
-
-  handleSubmit = e => {
+ const handleSubmit = e => {
     e.preventDefault();
-    if (this.state.photoText.trim() === '') {
+    if (photoText.trim() === '') {
       alert('Будласка заповніть форму.');
       return;
     }
-    this.props.onSubmit(this.state.photoText);
-      
+    onSubmit(photoText);
     };
 
     
-    render() {
         return <header className={css.Searchbar}>
-  <form className={css.SearchForm} onSubmit={this.handleSubmit}>
+  <form className={css.SearchForm} onSubmit={handleSubmit}>
     <button className={css.SearchFormButton} type="submit">
               <CiSearch style={{
                 width: 40,
@@ -37,16 +35,14 @@ export class Searchbar extends Component {
       autocomplete="off"
       autofocus
       placeholder="Search images and photos"
-      value={this.state.photoText}
-      onChange={this.handlePhotoTextChange}
+      value={photoText}
+      onChange={handlePhotoTextChange}
     />
   </form>
 </header>
     }
-}
+
 
 Searchbar.protoTypes = {
-  handleSubmit: PropTypes.func.isRequired,
-  handlePhotoTextChange: PropTypes.func.isRequired,
-  photoText: PropTypes.string.isRequired,
+  onSubmit: PropTypes.func.isRequired,
 }

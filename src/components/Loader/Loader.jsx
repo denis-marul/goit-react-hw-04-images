@@ -1,6 +1,6 @@
 import { Triangle } from 'react-loader-spinner'
-
 import PropTypes from 'prop-types';
+
 export const Loader = ({ loading }) => {
     return <>
         {loading &&
